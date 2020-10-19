@@ -1,4 +1,19 @@
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### 学习点 
+1.学习useEffect，useCallBack，useRef，useReducer处理局部state，自custom Hook。
+2.学习slider实现逻辑
+3.学习pageX，offsetX，等区别
+
+参考文章：
+1. [2020.05 React Hook 最佳实践](https://zh-hans.reactjs.org/blog/2020/05/22/react-hooks.html) 
+
+2. [codesandbox](https://codesandbox.io/s/7-useslider-zuizhongban-forked-7ifec?file=/src/useSlider.js) 
+
+ 3.[鼠标位置的获取pageX，pageY，screenX，screenY，clientX，和clientY，offsetX ，offsetY，layerX，layerY的使用 和 区别 ](https://blog.csdn.net/qq_40990854/article/details/88925460)
+
+4.[鼠标事件以及clientX、offsetX、screenX、pageX、x的区别](https://blog.csdn.net/weixin_41342585/article/details/80659736)
 
 ## Available Scripts
 
