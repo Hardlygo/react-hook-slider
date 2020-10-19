@@ -11,7 +11,9 @@ const SET = "SET";
 const TO = "TO";
 
 //限定0=<ratio<=1
-const fixRatio = (ratio) => Math.max(0, Math.min(1, ratio));
+const fixRatio = (ratio) => {
+  return Math.max(0, Math.min(1, ratio));
+};
 
 /**
  * 
@@ -65,12 +67,12 @@ const reducer = (state, action) => {
       if (!state.sliding) {
         return state;
       }
-      const nowPos = horizon ? action.x : -action.y;
-      const delta = nowPos - state.lastPos;
+      //       const nowPos = horizon ? action.x : -action.y;
+      //       const delta = nowPos - state.lastPos;
       return {
         ...state,
-        lastPos: nowPos,
-        ratio: fixRatio(state.ratio + delta / state.slideRange),
+        //  lastPos: nowPos,
+        //  ratio: fixRatio(state.ratio + delta / state.slideRange),
         reset: false,
         sliding: false, //结束时候除了要记录位置还要关闭滑动标志
       };
@@ -86,14 +88,15 @@ const reducer = (state, action) => {
       return state;
     //直接跳到某一点
     case TO:
+      
       return {
         ...state,
         reset: false,
         sliding: false,
         ratio: fixRatio(
           horizon
-            ? action.x / state.slideWidth
-            : (state.slideHeight - action.y) / state.slideHeight
+            ? action.x / action.slideWidth
+            : (action.slideHeight - action.y) / action.slideHeight
         ),
       };
     default:
@@ -120,12 +123,18 @@ const useSlider = (props) => {
   //滑块条点击事件
   const handleHotAreaMouseDown = useCallback((e) => {
     const hotArea = hotAreaRef.current;
+    console.log(
+      11,
+      window.getComputedStyle(hotArea),
+      hotArea.getBoundingClientRect()
+    );
+
     dispatch({
       type: TO,
-      x: e.nativeEvent.offsetX, //相对父元素的x方向偏移
-      y: e.nativeEvent.offsetY,
-      slideHeight: hotArea.clientHeight,
-      slideWidth: hotArea.clientWidth,
+      x: e.touches[0].pageX - hotArea.getBoundingClientRect().left, //相对父元素的x方向偏移
+      y: e.touches[0].pageY - hotArea.getBoundingClientRect().top,
+      slideHeight: parseFloat(window.getComputedStyle(hotArea).height),
+      slideWidth: parseFloat(window.getComputedStyle(hotArea).width),
     });
   }, []);
 
@@ -134,8 +143,8 @@ const useSlider = (props) => {
     const hotArea = hotAreaRef.current;
     dispatch({
       type: START,
-      x: e.pageX, //相对document的x方向偏移
-      y: e.pageY,
+      x: e.touches[0].pageX, //相对document的x方向偏移
+      y: e.touches[0].pageY,
       slideWidth: hotArea.clientWidth,
       slideHeight: hotArea.clientHeight,
     });
@@ -150,37 +159,48 @@ const useSlider = (props) => {
 
   useEffect(() => {
     const onSliding = (e) => {
+      
+
       dispatch({
         type: MOVE,
-        x: e.pageX,
-        y: e.pageY,
+        x: e.touches[0].pageX,
+        y: e.touches[0].pageY,
       });
     };
 
     const onSlideEnd = (e) => {
+      
       dispatch({
         type: END,
-        x: e.pageX,
-        y: e.pageY,
+        //  x: e.touches[0].pageX,
+        //  y: e.touches[0].pageY,
       });
     };
 
-    document.addEventListener("mousemove", onSliding);
-    document.addEventListener("mouseup", onSlideEnd);
+    //     document.addEventListener("mousemove", onSliding);
+    //     document.addEventListener("mouseup", onSlideEnd);
+    //触摸事件
+    document.addEventListener("touchmove", onSliding);
+    document.addEventListener("touchend", onSlideEnd);
     return () => {
-      document.removeEventListener("mousemove", onSliding);
-      document.removeEventListener("mouseup", onSlideEnd);
+      //       document.removeEventListener("mousemove", onSliding);
+      //       document.removeEventListener("mouseup", onSlideEnd);
+
+      document.removeEventListener("touchmove", onSliding);
+      document.removeEventListener("touchend", onSlideEnd);
     };
   }, []);
 
   return [
     {
       ref: hotAreaRef,
-      onMouseDown: handleHotAreaMouseDown,
+      //       onMouseDown: handleHotAreaMouseDown,
+      onTouchStart: handleHotAreaMouseDown,
     },
     {
       ref: thumbRef,
-      onMouseDown: handleThumbMouseDown,
+      //       onMouseDown: handleThumbMouseDown,
+      onTouchStart: handleThumbMouseDown,
     },
     {
       ratio: state.ratio,

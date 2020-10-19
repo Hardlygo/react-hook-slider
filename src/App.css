@@ -6,10 +6,10 @@
 
 .slider {
   position: relative;
-  left: 50px;
+  left: 30px;
   top: 100px;
   height: 20px;
-  width: 500px;
+  width: 300px;
   background-color: #ddd;
   border-radius: 10px;
 }

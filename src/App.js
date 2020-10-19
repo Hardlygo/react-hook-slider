@@ -36,7 +36,7 @@ function App() {
       <div className="val">{`${ratio}`}</div><br/>
 
       <div className="slider">
-        <div className="track" {...hotAreaProps}></div>
+        <div className="track"  {...hotAreaProps}></div>
         <div className="has" style={{ width: `${ratio * 100}%` }}>
           <div className="ctrl" {...thumbProps}></div>
         </div>
