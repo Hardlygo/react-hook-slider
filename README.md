@@ -2,9 +2,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### 学习点 
-1.学习useEffect，useCallBack，useRef，useReducer处理局部state，自custom Hook。
-2.学习slider实现逻辑
-3.学习pageX，offsetX，等区别
+1.学习`useEffect`，`useCallBack`，`useRef`，`useReducer`处理局部`state`，自`custom Hook`。
+2.学习`slider`实现逻辑
+3.学习`pageX`，`offsetX`，等区别
 
 参考文章：
 1. [2020.05 React Hook 最佳实践](https://zh-hans.reactjs.org/blog/2020/05/22/react-hooks.html) 
